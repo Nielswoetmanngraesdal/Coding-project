@@ -27,6 +27,7 @@ class AppConfig:
     mqtt: MqttConfig  # Primary (first active) MQTT broker
     mqtt_configs: dict[str, MqttConfig] = field(default_factory=dict)  # All active profiles
     simulation: "SimulationConfig | None" = None
+    flood: "FloodConfig | None" = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,6 +78,38 @@ def _parse_utc_datetime(value: Any) -> datetime:
     return dt.astimezone(timezone.utc)
 
 
+@dataclass(frozen=True, slots=True)
+class FloodConfig:
+    """Configuration parameters for the flood simulation.
+
+    The values here correspond to the defaults described in the
+    architecture concepts document.  This section is optional; notebooks can
+    read ``load_config().flood`` and ignore it if ``None``.
+    """
+
+    trigger_interval_s: float = 10.0
+    observer_interval_s: float = 5.0
+    control_threshold: float = 2.0
+    response_timeout_s: float = 30.0
+    map_zoom: int = 12
+    map_center: tuple[float, float] = (40.0, -75.0)
+
+
+def _parse_flood_config(data: Any) -> FloodConfig | None:
+    if data is None:
+        return None
+    if not isinstance(data, dict):
+        raise ValueError("flood config must be a mapping")
+    return FloodConfig(
+        trigger_interval_s=float(data.get("trigger_interval_s", 10.0)),
+        observer_interval_s=float(data.get("observer_interval_s", 5.0)),
+        control_threshold=float(data.get("control_threshold", 2.0)),
+        response_timeout_s=float(data.get("response_timeout_s", 30.0)),
+        map_zoom=int(data.get("map_zoom", 12)),
+        map_center=tuple(data.get("map_center", (40.0, -75.0))),
+    )
+
+
 def load_config(path: str | Path = "config.yaml") -> AppConfig:
     # Load a local .env if present (it is gitignored by default).
     # This makes workshop setup easier while keeping secrets out of git.
@@ -87,6 +120,7 @@ def load_config(path: str | Path = "config.yaml") -> AppConfig:
     active_profiles = _get_active_profiles(data)
     mqtt_config_dicts = _load_mqtt_configs(data, active_profiles)
     simulation = data.get("simulation")
+    flood = data.get("flood")
 
     # Build MqttConfig objects for all active profiles
     mqtt_configs: dict[str, MqttConfig] = {}
@@ -102,11 +136,13 @@ def load_config(path: str | Path = "config.yaml") -> AppConfig:
         raise ValueError("No active MQTT profiles found in config")
 
     sim_cfg = _parse_simulation_config(simulation)
+    flood_cfg = _parse_flood_config(flood)
 
     return AppConfig(
         mqtt=primary_mqtt,
         mqtt_configs=mqtt_configs,
         simulation=sim_cfg,
+        flood=flood_cfg,
     )
 
 

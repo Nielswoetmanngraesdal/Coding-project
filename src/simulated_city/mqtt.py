@@ -90,6 +90,20 @@ class MqttPublisher:
         return result
 
 
+
+def make_topic(cfg: MqttConfig, *parts: str) -> str:
+    """Construct a topic under the configured base topic.
+
+    Example::
+
+        topic = make_topic(cfg, "observer", "s1")
+        # -> "simulated-city/observer/s1" (assuming default base_topic)
+    """
+    base = cfg.base_topic.strip("/")
+    sections = [base] + [p.strip("/") for p in parts]
+    return "/".join(sections)
+
+
 def _make_client_id(prefix: str, suffix: str | None) -> str:
     """Create a client ID from a prefix and an optional suffix."""
     safe_prefix = prefix.strip() or "simcity"

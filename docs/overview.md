@@ -16,6 +16,8 @@ The goal is to keep the code:
 - `notebooks/`: workshop notebooks
   - `01_maps_and_coordinates.ipynb` — Maps and coordinate system transforms
   - `02_mqtt_intro/` — MQTT publisher and subscriber examples with multi-broker support
+  - `agent_*.ipynb` – flood simulation agents (trigger, observer, control, response, dashboard). These notebooks are skeletons that students fill in from the
+    concepts document.
 - `docs/`: workshop handouts and exercises
 - `tests/`: small sanity checks
 

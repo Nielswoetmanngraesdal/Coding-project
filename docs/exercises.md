@@ -15,9 +15,10 @@ This is how real systems work — agents are independent processes.
 
 ```
 notebooks/
-├── agent_transport.ipynb      # Transport simulation agent
-├── agent_environment.ipynb    # Air quality simulation agent  
-├── agent_infrastructure.ipynb # Building/utility agent
+├── agent_trigger.ipynb        # Flood trigger source
+├── agent_observer.ipynb       # Sensor/observer agent (water level)
+├── agent_control.ipynb        # Control logic (issue alerts)
+├── agent_response.ipynb       # Actuator/response agent
 └── dashboard.ipynb            # Read-only visualization
 ```
 

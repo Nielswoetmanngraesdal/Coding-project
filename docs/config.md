@@ -35,6 +35,8 @@ Typical fields:
 Top-level config wrapper. Currently contains:
 
 - `mqtt: MqttConfig`
+- `flood: FloodConfig | None` – optional simulation parameters for the
+  flood workshop (see below)
 
 
 ## Functions
@@ -63,6 +65,29 @@ print(cfg.mqtt.host, cfg.mqtt.port, cfg.mqtt.tls)
 print("base topic:", cfg.mqtt.base_topic)
 ```
 
+
+
+## Flood configuration (workshop-specific)
+
+The flood simulation adds a second section to `config.yaml` that is read into
+`AppConfig.flood`.
+Each field has a reasonable default, so the section may be omitted entirely.
+
+Example YAML fragment:
+
+```yaml
+flood:
+  trigger_interval_s: 10.0      # how often the trigger agent publishes
+  observer_interval_s: 5.0      # sensor polling frequency
+  control_threshold: 2.0        # water level (m) at which control issues alerts
+  response_timeout_s: 30        # seconds to wait for actuator ack
+  map_zoom: 12                  # default map zoom level
+  map_center: [40.0, -75.0]     # initial map centre (lat, lon)
+```
+
+When present, `cfg.flood` will be a `FloodConfig` instance; otherwise it is
+`None`. Notebook authors should treat it as optional and fall back to their
+own defaults as needed.
 
 ## Internal helpers (advanced)
 
