@@ -39,6 +39,20 @@ def test_response_status_serialization():
     assert s == ResponseStatus.from_json(s.to_json())
 
 
+def test_response_status_structured_details_serialization():
+    details = {
+        "evacuated": 3,
+        "in_transit": 7,
+        "pedestrians": [
+            {"id": "person_1", "lat": 55.45, "lon": 12.19, "location": "strand"}
+        ],
+    }
+    s = ResponseStatus(device="response", status="running", details=details, timestamp="now")
+    restored = ResponseStatus.from_json(s.to_json())
+    assert isinstance(restored.details, dict)
+    assert restored.details["evacuated"] == 3
+
+
 def test_flood_config_parsing(tmp_path, monkeypatch):
     yaml = tmp_path / "cfg.yaml"
     yaml.write_text(

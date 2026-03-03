@@ -70,7 +70,7 @@ class ControlCommand:
 class ResponseStatus:
     device: str
     status: Literal["idle", "running", "error"]
-    details: str
+    details: str | dict[str, Any]
     timestamp: ISOTime
 
     def to_json(self) -> dict[str, Any]:

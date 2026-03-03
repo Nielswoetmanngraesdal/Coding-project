@@ -444,7 +444,7 @@ py -m pytest -v
 
 ## 8. What's NOT Included in Phase 5.1
 
-❌ **Map visualization** – Still requires anymap-ts (future enhancement)
+✅ **Map visualization** – Implemented with anymap-ts in `dashboard.ipynb`
 ❌ **Multi-broker support** – Requires configuration changes (future)
 ❌ **Sensor failures** – Could be added to observer agent (future)
 ❌ **ML-based control** – Requires ML library (future)
