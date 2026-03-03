@@ -21,6 +21,7 @@ Install with:
 
 from functools import lru_cache
 from typing import Iterable
+import math
 
 
 EPSG_3857 = "EPSG:3857"
@@ -55,6 +56,37 @@ def utm2wgs(easting: float, northing: float) -> tuple[float, float]:
 
         lon, lat = transform_xy(easting, northing, from_crs=EPSG_25832, to_crs=EPSG_4326)
         return lat, lon
+
+
+def distance_wgs84(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Calculate great-circle distance between two WGS84 points.
+
+    Uses Haversine formula for accurate distances on Earth's surface.
+
+    Parameters
+    - lat1, lon1: First point (latitude, longitude in degrees)
+    - lat2, lon2: Second point (latitude, longitude in degrees)
+
+    Returns
+    - Distance in meters
+    """
+
+    R = 6371000  # Earth radius in meters
+
+    # Convert degrees to radians
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    # Haversine formula
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2
+    c = 2 * math.asin(math.sqrt(a))
+
+    return R * c
 
 
 def webmercator_to_epsg25832(x: float, y: float) -> tuple[float, float]:
