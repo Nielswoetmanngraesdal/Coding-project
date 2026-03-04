@@ -23,7 +23,7 @@ def check_notebook_structure():
     
     for nb_file in notebooks:
         try:
-            with open(nb_file) as f:
+            with open(nb_file, encoding="utf-8") as f:
                 nb = json.load(f)
             
             num_cells = len(nb.get("cells", []))
@@ -88,7 +88,7 @@ def check_pyproject():
     if not pyproject.exists():
         return
     
-    content = pyproject.read_text()
+    content = pyproject.read_text(encoding="utf-8")
     
     if "anymap-ts" not in content:
         WARNINGS.append(
@@ -111,7 +111,7 @@ def check_notebooks_mqtt():
             continue
         
         try:
-            with open(nb_file) as f:
+            with open(nb_file, encoding="utf-8") as f:
                 nb = json.load(f)
             
             source = "".join(
@@ -122,10 +122,13 @@ def check_notebooks_mqtt():
             
             # Agent notebooks should use mqtt
             if "agent" in nb_file.name:
-                if "mqtt.connect_mqtt" not in source:
+                uses_connect_helper = "connect_mqtt(" in source or "mqtt.connect_mqtt(" in source
+                uses_connector_class = "MqttConnector(" in source and ".connect(" in source
+
+                if not (uses_connect_helper or uses_connector_class):
                     WARNINGS.append(
-                        f"⚠️  {nb_file.relative_to(WORKSPACE)}: Agent notebook but no mqtt.connect_mqtt(). "
-                        f"Does it need to publish/subscribe?"
+                        f"⚠️  {nb_file.relative_to(WORKSPACE)}: Agent notebook but no MQTT connection setup found. "
+                        f"Use connect_mqtt() or MqttConnector(...).connect() for publish/subscribe agents."
                     )
         
         except json.JSONDecodeError:
