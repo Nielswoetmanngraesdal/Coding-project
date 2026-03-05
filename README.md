@@ -35,8 +35,8 @@ A weather station, with sensors, can pick up the sudden change in water level, w
 *Example: A sensor in Køge bay can detect difference water levels rising and the power of the flood.
 
 #### 3. The Control Center (The Logic)
-The weather station, pick up the data and information given by the sensor, and thereafter proces the data. If the water is rising more than 5 meters, then they will send out a warning signal to the people near Køge on their phones.
-*Example: If the water level rises to more than 5 meters then the metoerologists will send out warning signals to peoples phone, to get away from the beach and towards the inner city of Køge.*
+The weather station, pick up the data and information given by the sensor, and thereafter proces the data. If the water level rises to 1 meter or higher, then they will send out a warning signal to the people near Køge on their phones.
+*Example: If the water level rises to 1 meter or higher then the metoerologists will send out warning signals to peoples phone, to get away from the beach and towards the inner city of Køge.*
 
 #### 4. The Response (What happens next?)
 What follows is the people around the beach, who get the warning signal, will make the choice to go towards the inner city, which is higher elevated above the sea than, the beach.

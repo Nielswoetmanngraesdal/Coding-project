@@ -108,10 +108,10 @@ Payload: {"sensor_id": "sensor_1", "water_level": 2.3, "flow_rate": 0.0, "timest
   - LOW trigger → baseline 0.2m
   - HIGH trigger → ramp to 6.5m over 5 seconds
   - Recovery → ramp down over 10 seconds
-- **Threshold:** 5.0m
+- **Threshold:** 1.0m
 - **Alerts:**
-  - Water ≥ 5m → publish HIGH alert
-  - Water < 5m → publish LOW alert (all-clear)
+  - Water ≥ 1m → publish HIGH alert
+  - Water < 1m → publish LOW alert (all-clear)
 
 **MQTT Input:** `city/flood/trigger`
 
@@ -203,7 +203,7 @@ Payload: {"action": "alert", "target": "all_pedestrians", "parameters": {"severi
 ### 5.6 Advanced Control Logic
 - Machine learning classifier for water level risk categories
 - Predictive alerting (warn before water reaches threshold)
-- Multi-threshold system (yellow alert at 3m, red at 5m)
+- Multi-threshold system (yellow alert at 0.7m, red at 1m)
 
 ### 5.7 Persistence & Playback
 - Log all MQTT messages to a database
@@ -267,7 +267,7 @@ jupyter notebook dashboard.ipynb
 3. **T=5-10s:** Control logic waiting (no alert)
 4. **T=15s:** Trigger escalates to HIGH severity
 5. **T=15-20s:** Observer reports rising water (ramps toward 6.5m)
-6. **T=20s:** Control logic detects water ≥ 5m → publishes HIGH alert
+6. **T=20s:** Control logic detects water ≥ 1m → publishes HIGH alert
 7. **T=20-28s:** Response agent evacuates 10 people to Køge Torv
 8. **T=30s:** Trigger recovers to LOW → water recedes
 9. **T=30-35s:** Control logic publishes LOW alert (all-clear)
@@ -290,7 +290,7 @@ mqtt:
 flood:
   trigger_interval_s: 10
   observer_interval_s: 5
-  control_threshold: 2.0  # NOTE: concepts uses 5.0m for actual threshold
+  control_threshold: 2.0  # NOTE: concepts uses 1.0m for actual threshold
   response_timeout_s: 30
   map_zoom: 12
   map_center: [55.45, 12.19]

@@ -25,7 +25,7 @@ Five independent Jupyter notebooks, one per agent. Each is self-contained and co
 
 #### `notebooks/agent_control.ipynb` (Decision Logic)
 - **Purpose:** Monitor trigger events and sensor data; issue evacuation alerts
-- **Decision Logic:** If water ≥ 5m → HIGH alert; else → LOW alert
+- **Decision Logic:** If water ≥ 1m → HIGH alert; else → LOW alert
 - **Water Simulation:** Ramps up during HIGH trigger, recovers during LOW
 - **Output:** Publishes `ControlCommand` (alert/all-clear)
 - **Cells:** 6 (header, setup/config, MQTT connection, callbacks, simulation, main loop)
@@ -186,7 +186,7 @@ jupyter notebook agent_control.ipynb
 **Expected output:**
 ```
 Control agent configured:
-  Water threshold: 5.0m
+  Water threshold: 1.0m
   Flood level: 6.5m
   Baseline level: 0.2m
 Subscribed to: city/flood/trigger
@@ -196,9 +196,9 @@ Update interval: 1.0s
 [1] Water: 0.20m | Trigger: None | Alert: False
 [2] Water: 0.20m | Trigger: None | Alert: False
 ...
-[25] ⚠️  ALERT: Water level 5.10m >= threshold 5.0m
+[25] ⚠️  ALERT: Water level 1.20m >= threshold 1.0m
   → Published control command: alert (high)
-[26] Water: 5.20m | Trigger: high | Alert: True
+[26] Water: 1.70m | Trigger: high | Alert: True
 ```
 
 2. **Run cell 6 (main loop):**
@@ -302,14 +302,14 @@ Dashboard configured for Køge flood simulation
 
 1. **Terminal 1 (Trigger):** Switches from "LOW rain" to "HIGH rain" event
 2. **Terminal 2 (Observer):** Water level readings jump from ~0.2m to rapidly increasing
-3. **Terminal 3 (Control):** Detects water ≥ 5m, publishes HIGH alert
+3. **Terminal 3 (Control):** Detects water ≥ 1m, publishes HIGH alert
 4. **Terminal 4 (Response):** Receives HIGH alert, starts evacuating people
 5. **Terminal 5 (Dashboard):** Shows 🔴 RED alert, average water level rising
 
 **At ~45 seconds, you should see recovery:**
 
 1. **Terminal 1:** Publishes LOW severity event again for recovery phase
-2. **Terminal 3:** Water level drops below 5m, issues LOW (all-clear) alert
+2. **Terminal 3:** Water level drops below 1m, issues LOW (all-clear) alert
 3. **Terminal 4:** Response agent returns people to Køge Søndre Strand
 4. **Terminal 5:** Shows 🟢 GREEN alert, water level normalizes
 
@@ -404,18 +404,18 @@ Update interval: 1.0s
 [21] Water: 0.20m | Trigger: low | Alert: False
 ...
 [25] Trigger received: HIGH rain
-[26] ⚠️  ALERT: Water level 5.05m >= threshold 5.0m
+[26] ⚠️  ALERT: Water level 1.20m >= threshold 1.0m
   → Published control command: alert (high)
-[27] Water: 5.15m | Trigger: high | Alert: True
-[28] Water: 5.25m | Trigger: high | Alert: True
+[27] Water: 1.70m | Trigger: high | Alert: True
+[28] Water: 2.20m | Trigger: high | Alert: True
 ...
 [45] Trigger received: LOW rain
-[46] ✓ ALL-CLEAR: Water level 4.95m < threshold
+[46] ✓ ALL-CLEAR: Water level 0.70m < threshold
   → Published control command: alert (low)
 [47] Water: 0.20m | Trigger: low | Alert: False
 ```
 
-**Verification:** ✓ Transitions from False→True at water ≥ 5m, back to False when < 5m
+**Verification:** ✓ Transitions from False→True at water ≥ 1m, back to False when < 1m
 
 ---
 
@@ -516,7 +516,7 @@ LIVE STATUS - Køge Flood Simulation
 Trigger → city/flood/trigger
            ↓
          Control (receives, simulates water level)
-           ↓ (if water >= 5m)
+           ↓ (if water >= 1m)
          city/flood/control/command
            ↓
          Response (evacuates people)

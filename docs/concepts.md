@@ -146,7 +146,7 @@ Loaded via `simulated_city.config.load_config()` from `config.yaml` with overrid
 ### ✅ Already Clarified
 
 * How many observer nodes are needed in practice; should we auto‑spawn them? → **5 observer nodes, with auto-spawn possible.**
-* Do control rules remain simple thresholds or require a rules engine? → **Simple threshold: if water_level ≥ 5 meters, alert.**
+* Do control rules remain simple thresholds or require a rules engine? → **Simple threshold: if water_level ≥ 1 meter, alert.**
 * What error handling strategy when MQTT broker disconnects? → **Backup broker + reconnect strategy.**
 * Assumed non‑secure public broker in defaults; real deployments may require TLS. → **TLS is required.**
 * Mapping coordinates are static; dynamic location updates may be needed later. → **People will move between Køge Torv and Køge Søndre Strand based on water level.**

@@ -234,7 +234,7 @@ tests/test_integration.py::TestErrorHandling::test_missing_required_field PASSED
 ✓ PASSED
   Scenario: HIGH severity trigger → water rises → alert issued
   Step 1: Trigger publishes HIGH "rain" event ✓
-  Step 2: Control receives and detects water >= 5m ✓
+  Step 2: Control receives and detects water >= 1m ✓
   Step 3: Control issues "alert/evacuation" command ✓
 ```
 

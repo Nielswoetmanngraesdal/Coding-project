@@ -17,7 +17,7 @@ This is how real systems work — agents are independent processes.
 notebooks/
 ├── agent_trigger.ipynb        # Flood trigger source
 ├── agent_observer.ipynb       # Sensor/observer agent (water level)
-├── agent_control.ipynb        # Control logic (issue alerts)
+├── agent_control.ipynb        # Control logic (issue alerts; evacuate at water level ≥ 1.0 m)
 ├── agent_response.ipynb       # Actuator/response agent
 └── dashboard.ipynb            # Read-only visualization
 ```
