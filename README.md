@@ -26,7 +26,7 @@ Use this template to describe your project. Think about these four components an
 ### My Smart City Project: [City flooded]
 
 #### 1. The Trigger (Who/What is moving?)
-There is 20 people walking in the coastal area of Køge. They walk along the beach road and some of the 20 people are walking in Køge city itself.The weather is sunny, but the sea is acting abnormal. Due to climate change, the water is rising and there is a chance that the sea will flood the inner city of køge.
+There is 10 people walking in the coastal area of Køge. They walk along the beach road and some of the 10 people are walking in Køge city itself.The weather is sunny, but the sea is acting abnormal. Due to climate change, the water is rising and there is a chance that the sea will flood the inner city of køge.
 *Example: A person is walking along the beach and is observing the weird and sudden rise in levels of the sea.*
 
 #### 2. The Observer (What does the city see?)
